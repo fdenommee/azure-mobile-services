@@ -46,8 +46,8 @@ import com.google.gson.annotations.SerializedName;
 import com.microsoft.windowsazure.mobileservices.authentication.LoginManager;
 import com.microsoft.windowsazure.mobileservices.authentication.MobileServiceAuthenticationProvider;
 import com.microsoft.windowsazure.mobileservices.authentication.MobileServiceUser;
-import com.microsoft.windowsazure.mobileservices.http.AndroidHttpClientFactory;
-import com.microsoft.windowsazure.mobileservices.http.AndroidHttpClientFactoryImpl;
+import com.microsoft.windowsazure.mobileservices.http.HttpClientFactory;
+import com.microsoft.windowsazure.mobileservices.http.HttpClientFactoryImpl;
 import com.microsoft.windowsazure.mobileservices.http.MobileServiceConnection;
 import com.microsoft.windowsazure.mobileservices.http.MobileServiceHttpClient;
 import com.microsoft.windowsazure.mobileservices.http.NextServiceFilterCallback;
@@ -135,7 +135,7 @@ public class MobileServiceClient {
     /**
      * AndroidHttpClientFactory used for request execution
      */
-    private AndroidHttpClientFactory mAndroidHttpClientFactory;
+    private HttpClientFactory mAndroidHttpClientFactory;
     /**
      * MobileServicePush used for push notifications
      */
@@ -179,7 +179,7 @@ public class MobileServiceClient {
         GsonBuilder gsonBuilder = createMobileServiceGsonBuilder();
         gsonBuilder.serializeNulls(); // by default, add null serialization
 
-        initialize(appUrl, appKey, null, gsonBuilder, context, new AndroidHttpClientFactoryImpl());
+        initialize(appUrl, appKey, null, gsonBuilder, context, new HttpClientFactoryImpl());
     }
 
     /**
@@ -1441,7 +1441,7 @@ public class MobileServiceClient {
      * @param context     The Context where the MobileServiceClient is created
      */
     private void initialize(URL appUrl, String appKey, MobileServiceUser currentUser, GsonBuilder gsonBuiler, Context context,
-                            AndroidHttpClientFactory androidHttpClientFactory) {
+                            HttpClientFactory androidHttpClientFactory) {
         if (appUrl == null || appUrl.toString().trim().length() == 0) {
             throw new IllegalArgumentException("Invalid Application URL");
         }
@@ -1529,14 +1529,14 @@ public class MobileServiceClient {
      *
      * @return
      */
-    public AndroidHttpClientFactory getAndroidHttpClientFactory() {
+    public HttpClientFactory getAndroidHttpClientFactory() {
         return mAndroidHttpClientFactory;
     }
 
     /**
      * Sets the AndroidHttpClientFactory
      */
-    public void setAndroidHttpClientFactory(AndroidHttpClientFactory mAndroidHttpClientFactory) {
+    public void setAndroidHttpClientFactory(HttpClientFactory mAndroidHttpClientFactory) {
         this.mAndroidHttpClientFactory = mAndroidHttpClientFactory;
     }
 

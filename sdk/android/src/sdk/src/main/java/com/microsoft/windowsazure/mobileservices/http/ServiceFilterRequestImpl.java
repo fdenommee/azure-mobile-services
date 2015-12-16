@@ -23,12 +23,11 @@ See the Apache Version 2.0 License for specific language governing permissions a
  */
 package com.microsoft.windowsazure.mobileservices.http;
 
-import android.net.http.AndroidHttpClient;
-
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.ByteArrayEntity;
@@ -54,7 +53,7 @@ public class ServiceFilterRequestImpl implements ServiceFilterRequest {
      */
     private byte[] mContent;
 
-    private AndroidHttpClientFactory mAndroidHttpClientFactory;
+    private HttpClientFactory mHttpClientFactory;
 
     /**
      * @param request
@@ -68,23 +67,23 @@ public class ServiceFilterRequestImpl implements ServiceFilterRequest {
      * @param factory The AndroidHttpClientFactory instance used to create
      *                AndroidHttpClient objects
      */
-    public ServiceFilterRequestImpl(HttpRequestBase request, AndroidHttpClientFactory factory) {
+    public ServiceFilterRequestImpl(HttpRequestBase request, HttpClientFactory factory) {
         mRequest = request;
-        mAndroidHttpClientFactory = factory;
+        mHttpClientFactory = factory;
     }
 
     @Override
     public ServiceFilterResponse execute() throws Exception {
         // Execute request
-        AndroidHttpClient client = mAndroidHttpClientFactory.createAndroidHttpClient();
-        client.getParams().setParameter(HTTP.USER_AGENT, MobileServiceConnection.getUserAgent());
+        HttpClient client = mHttpClientFactory.createHttpClient();
+//        client.getParams().setParameter(HTTP.USER_AGENT, MobileServiceConnection.getUserAgent());
 
         try {
             final HttpResponse response = client.execute(mRequest);
             ServiceFilterResponse serviceFilterResponse = new ServiceFilterResponseImpl(response);
             return serviceFilterResponse;
         } finally {
-            client.close();
+//            client.close();
         }
     }
 

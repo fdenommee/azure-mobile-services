@@ -19,19 +19,21 @@ See the Apache Version 2.0 License for specific language governing permissions a
  */
 
 /**
- * AndroidHttpClientFactoryImpl.java
+ * AndroidHttpClientFactory.java
  */
 package com.microsoft.windowsazure.mobileservices.http;
 
-import android.net.http.AndroidHttpClient;
+import org.apache.http.client.HttpClient;
 
 /**
- * Default implementation for AndroidHttpClientFactory
+ * Factory for HttpClient instances
  */
-public class AndroidHttpClientFactoryImpl implements AndroidHttpClientFactory {
+public interface HttpClientFactory {
 
-    @Override
-    public AndroidHttpClient createAndroidHttpClient() {
-        return AndroidHttpClient.newInstance(MobileServiceConnection.getUserAgent());
-    }
+    /**
+     * Creates a new HttpClient
+     *
+     * @return A new HttpClient
+     */
+    HttpClient createHttpClient();
 }
