@@ -103,11 +103,15 @@ public class IncrementalPullStrategy extends PullStrategy {
 
         JsonObject lastElement = elements.get(elements.size() - 1).getAsJsonObject();
 
-        String lastElementUpdatedAt = lastElement.get(MobileServiceSystemColumns.UpdatedAt).getAsString();
+        final JsonElement element = lastElement.get(MobileServiceSystemColumns.UpdatedAt);
 
-        maxUpdatedAt = getDateFromString(lastElementUpdatedAt);
+        if (element != null) {
+            String lastElementUpdatedAt = element.getAsString();
 
-        saveMaxUpdatedDate(lastElementUpdatedAt);
+            maxUpdatedAt = getDateFromString(lastElementUpdatedAt);
+
+            saveMaxUpdatedDate(lastElementUpdatedAt);
+        }
     }
 
     public boolean moveToNextPage(int lastElementCount) {

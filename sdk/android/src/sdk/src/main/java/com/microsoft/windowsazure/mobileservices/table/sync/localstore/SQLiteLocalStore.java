@@ -31,6 +31,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
+import android.util.Log;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -272,6 +273,10 @@ public class SQLiteLocalStore extends SQLiteOpenHelper implements MobileServiceL
 
                 if (pendingItems < pageSize) {
                     localPageSize = pendingItems;
+                }
+
+                if (localPageSize == 0) {
+                    return;
                 }
 
                 JsonObject[] pageItems = new JsonObject[localPageSize];
